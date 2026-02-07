@@ -1,12 +1,11 @@
 from datetime import date
-from pathlib import Path
 import sqlite3
 from typing import List, Optional
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field, condecimal
 
-DB_PATH = Path(__file__).resolve().parent / "spendly.db"
+DB_PATH = "./backend/spendly.db"
 
 app = FastAPI(title="Spendly API")
 
@@ -29,7 +28,6 @@ class Summary(BaseModel):
 
 
 def get_connection() -> sqlite3.Connection:
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
